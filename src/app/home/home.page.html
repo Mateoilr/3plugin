@@ -1,20 +1,26 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title>Capacitor Demo</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <ion-button (click)="takePhoto()">Tomar Foto</ion-button>
+  <img *ngIf="image" [src]="image" width="200"/>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-button (click)="getLocation()">Obtener Ubicación</ion-button>
+<div *ngIf="location">
+  <p><strong>Latitud:</strong> {{ location.coords.latitude }}</p>
+  <p><strong>Longitud:</strong> {{ location.coords.longitude }}</p>
+  <p><strong>Precisión:</strong> {{ location.coords.accuracy }} metros</p>
+</div>
+
+  <ion-button (click)="getDeviceInfo()">Información del Dispositivo</ion-button>
+  <div *ngIf="deviceInfo">
+    <p><strong>Modelo:</strong> {{ deviceInfo.model }}</p>
+    <p><strong>Plataforma:</strong> {{ deviceInfo.platform }}</p>
+    <p><strong>Versión:</strong> {{ deviceInfo.version }}</p>
+    <p><strong>Fabricante:</strong> {{ deviceInfo.manufacturer }}</p>
+    </div>
+
 </ion-content>
