@@ -1,26 +1,81 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Capacitor Demo</ion-title>
+    <ion-title>
+      Capacitor Plugins Demo
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-button (click)="takePhoto()">Tomar Foto</ion-button>
-  <img *ngIf="image" [src]="image" width="200"/>
+  <!-- Sección de Cámara -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Cámara</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button expand="block" (click)="tomarFoto()">
+        Tomar Foto
+      </ion-button>
 
-  <ion-button (click)="getLocation()">Obtener Ubicación</ion-button>
-<div *ngIf="location">
-  <p><strong>Latitud:</strong> {{ location.coords.latitude }}</p>
-  <p><strong>Longitud:</strong> {{ location.coords.longitude }}</p>
-  <p><strong>Precisión:</strong> {{ location.coords.accuracy }} metros</p>
-</div>
+      <div *ngIf="foto" class="ion-margin-top">
+        <img [src]="foto" alt="Foto tomada" style="max-width: 100%; border-radius: 8px;">
+      </div>
+    </ion-card-content>
+  </ion-card>
 
-  <ion-button (click)="getDeviceInfo()">Información del Dispositivo</ion-button>
-  <div *ngIf="deviceInfo">
-    <p><strong>Modelo:</strong> {{ deviceInfo.model }}</p>
-    <p><strong>Plataforma:</strong> {{ deviceInfo.platform }}</p>
-    <p><strong>Versión:</strong> {{ deviceInfo.version }}</p>
-    <p><strong>Fabricante:</strong> {{ deviceInfo.manufacturer }}</p>
-    </div>
+  <!-- Sección de Geolocalización -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Geolocalización</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button expand="block" (click)="obtenerUbicacion()">
+        Obtener Ubicación
+      </ion-button>
 
+      <div *ngIf="ubicacion" class="ion-margin-top">
+        <ion-item>
+          <ion-label>Latitud: {{ ubicacion.latitud }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Longitud: {{ ubicacion.longitud }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Precisión: {{ ubicacion.precision }} metros</ion-label>
+        </ion-item>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Sección de Dispositivo -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Información del Dispositivo</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button expand="block" (click)="obtenerInfoDispositivo()">
+        Obtener Info
+      </ion-button>
+
+      <div *ngIf="infoDispositivo" class="ion-margin-top">
+        <ion-item>
+          <ion-label>Plataforma: {{ infoDispositivo.platform }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Fabricante: {{ infoDispositivo.manufacturer }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Modelo: {{ infoDispositivo.model }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Sistema Operativo: {{ infoDispositivo.osVersion }}</ion-label>
+        </ion-item>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Mensaje de error -->
+  <div *ngIf="error" class="ion-text-center ion-padding" style="color: red;">
+    {{ error }}
+  </div>
 </ion-content>

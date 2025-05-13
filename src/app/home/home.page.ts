@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { Geolocation } from '@capacitor/geolocation';
-import { Device } from '@capacitor/device';
+import { CameraService } from '../services/camera.service';
+import { GeolocationService } from '../services/geolocation.service';
+import { DeviceService } from '../services/device.service';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-home',
@@ -12,29 +13,49 @@ import { CommonModule } from '@angular/common';
   imports: [IonicModule, CommonModule]
 })
 export class HomePage {
-  image: string | undefined;
-  location: any;
-  deviceInfo: any;
+  foto: string | null = null;
+  ubicacion: any = null;
+  infoDispositivo: any = null;
+  error: string | null = null;
 
-  constructor() {}
+  constructor(
+    private cameraService: CameraService,
+    private geolocationService: GeolocationService,
+    private deviceService: DeviceService
+  ) {}
 
-  async takePhoto() {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: false,
-      resultType: CameraResultType.DataUrl,
-      source: CameraSource.Camera
-    });
-
-    this.image = image.dataUrl;
+  async tomarFoto() {
+    try {
+      this.foto = await this.cameraService.tomarFoto();
+      this.error = null;
+    } catch (err) {
+      this.error = 'Error al tomar la foto';
+      console.error(err);
+    }
   }
 
-  async getLocation() {
-    const coordinates = await Geolocation.getCurrentPosition();
-    this.location = coordinates;
+  async obtenerUbicacion() {
+    try {
+      const posicion = await this.geolocationService.obtenerUbicacionActual();
+      this.ubicacion = {
+        latitud: posicion.coords.latitude,
+        longitud: posicion.coords.longitude,
+        precision: posicion.coords.accuracy
+      };
+      this.error = null;
+    } catch (err) {
+      this.error = 'Error al obtener ubicación';
+      console.error(err);
+    }
   }
 
-  async getDeviceInfo() {
-    this.deviceInfo = await Device.getInfo();
+  async obtenerInfoDispositivo() {
+    try {
+      this.infoDispositivo = await this.deviceService.obtenerInformacionDispositivo();
+      this.error = null;
+    } catch (err) {
+      this.error = 'Error al obtener info del dispositivo';
+      console.error(err);
+    }
   }
 }
