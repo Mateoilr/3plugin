@@ -64,5 +64,12 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.6.3"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+
+  "styles": [
+  "src/theme/variables.scss",
+  "src/global.scss",
+  "node_modules/@ionic/angular/css/core.css"
+]
+
 }
